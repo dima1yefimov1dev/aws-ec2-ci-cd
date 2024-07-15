@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "dev" ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: [self-hosted, dev]
@@ -28,6 +27,8 @@ jobs:
         touch .env
         echo HELLO_MESSAGE=$HELLO_MESSAGE >> .env
         echo PORT=$PORT >> .env
+    - run: |
+      echo "HELLO_MESSAGE: $HELLO_MESSAGE"
     - run: npm ci
     - run: npm run build --if-present
     - run: pm2 restart main
