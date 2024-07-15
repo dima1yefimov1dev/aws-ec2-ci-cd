@@ -15,10 +15,10 @@ jobs:
     - name: Create .env file
       env:
         PORT: ${{ secrets.PORT }}
-        HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
+        HELLO_MESSAGE: '${{ secrets.HELLO_MESSAGE }}'
       run: |
-        echo HELLO_MESSAGE=$HELLO_MESSAGE >> .env
-        echo PORT=$PORT >> .env
+        echo "HELLO_MESSAGE=\"$HELLO_MESSAGE\"" >> .env
+        echo "PORT=$PORT" >> .env
 
     - name: Persist .env file
       uses: actions/upload-artifact@v3
@@ -56,4 +56,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Download .env file
+      uses: actions/download-artifact@v3
+      with:
+        name: env-file
+
     - run: pm2 restart main
