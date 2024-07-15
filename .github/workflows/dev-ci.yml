@@ -25,9 +25,7 @@ jobs:
         run: |
           echo "HELLO_MESSAGE=${{secrets.HELLO_MESSAGE}}" >> .env
           echo "PORT=${{secrets.PORT}}" >> .env
-
-      - run: |
-          echo "HELLO_MESSAGE: $HELLO_MESSAGE"
+          cat .env
 
       - run: npm ci
 
