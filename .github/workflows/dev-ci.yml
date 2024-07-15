@@ -53,4 +53,7 @@ jobs:
   deploy:
     runs-on: [self-hosted, dev]
     needs: build
+
+    steps:
+    - uses: actions/checkout@v4
     - run: pm2 restart main
