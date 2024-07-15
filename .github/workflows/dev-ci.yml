@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    ENVIRONMENT: dev
+    environment: dev
     strategy:
       matrix:
         node-version: [20.x]  # Adjust based on your project's Node.js version requirement
