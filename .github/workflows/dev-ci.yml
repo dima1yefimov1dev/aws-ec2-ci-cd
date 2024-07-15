@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    environment: dev
+    ENVIRONMENT: dev
     strategy:
       matrix:
         node-version: [20.x]  # Adjust based on your project's Node.js version requirement
@@ -22,12 +22,9 @@ jobs:
           cache: 'npm'
 
       - name: Create .env file
-        env:
-          PORT: ${{ secrets.PORT }}
-          HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
         run: |
-          echo "HELLO_MESSAGE=$HELLO_MESSAGE" > .env
-          echo "PORT=$PORT" >> .env
+          echo "HELLO_MESSAGE=${{secrets.HELLO_MESSAGE}}" > .env
+          echo "PORT=${{secrets.PORT}}" >> .env
 
       - run: |
           echo "HELLO_MESSAGE: $HELLO_MESSAGE"
