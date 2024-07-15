@@ -2,7 +2,7 @@ name: Manual Deploy to Production
 
 on:
   workflow_dispatch:
-
+  
 jobs:
   build:
     runs-on: [self-hosted, prod]
