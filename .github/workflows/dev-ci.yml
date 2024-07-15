@@ -4,12 +4,13 @@ on:
   push:
     branches: [ "dev" ]
   workflow_dispatch:
-
+  
+environment:
+      name: dev
 jobs:
   build:
     runs-on: self-hosted
-    environment:
-      name: dev
+    
     strategy:
       matrix:
         node-version: [20.x]  # Adjust based on your project's Node.js version requirement
@@ -27,7 +28,7 @@ jobs:
           PORT: ${{ secrets.PORT }}
           HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
         run: |
-          echo "HELLO_MESSAGE=$HELLO_MESSAGE" > .env
+          echo "HELLO_MESSAGE=$HELLO_MESSAGE" >> .env
           echo "PORT=$PORT" >> .env
 
       - run: |
