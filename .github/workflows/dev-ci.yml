@@ -23,6 +23,7 @@ jobs:
 
       - name: Create .env file
         run: |
+          touch .env
           echo "HELLO_MESSAGE=${{secrets.HELLO_MESSAGE}}" >> .env
           echo "PORT=${{secrets.PORT}}" >> .env
           cat .env
@@ -33,5 +34,4 @@ jobs:
 
       - name: Restart Application with PM2
         run: |
-          source .env  # Load the .env variables into the current shell session
           pm2 restart main --update-env
