@@ -2,7 +2,7 @@ name: Auto Deploy on Dev
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ["dev"]
   workflow_dispatch:
 
 jobs:
@@ -30,8 +30,10 @@ jobs:
 
       - run: npm ci
 
+      - run: npm install cross-env
+
       - run: npm run build --if-present
 
       - name: Restart Application with PM2
         run: |
-          cross-env-shell ENV_FILE=.env pm2 restart main --update-env
+          npx cross-env ENV_FILE=.env pm2 restart main --update-env
