@@ -1,0 +1,27 @@
+name: Make Dev Envfile
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  create-env:
+    runs-on: [self-hosted, ${{ inputs.environment }}]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ${{ inputs.environment }}
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
+          envkey_PORTT: ${{ secrets.DB_PORT }}
+          envkey_NODE_ENV: ${{inputs.environment}}
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+          directory: ./

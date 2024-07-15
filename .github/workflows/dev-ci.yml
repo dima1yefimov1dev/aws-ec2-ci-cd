@@ -21,19 +21,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Create .env file
-        run: |
-          touch .env
-          echo "HELLO_MESSAGE=${{secrets.HELLO_MESSAGE}}" >> .env
-          echo "PORT=${{secrets.PORT}}" >> .env
-          cat .env
+      - name: Make dev envfile
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
+          envkey_PORT: ${{ secrets.PORT }}
+          envkey_NODE_ENV: dev
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+          directory: ./
 
       - run: npm ci
-
-      - run: npm install cross-env
 
       - run: npm run build --if-present
 
       - name: Restart Application with PM2
         run: |
-          npx cross-env ENV_FILE=.env pm2 restart main --env dev
+          pm2 restart main
