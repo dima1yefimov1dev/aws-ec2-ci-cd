@@ -35,7 +35,7 @@ jobs:
     - name: Create .env file
       env:
         PORT: ${{ secrets.PORT }}
-        HELLO_MESSAGE: ${{ secrets.GENERAL_SECRET }}
+        HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
       run: |
         echo HELLO_MESSAGE=$HELLO_MESSAGE >> .env
         echo PORT=$PORT >> .env
