@@ -53,16 +53,4 @@ jobs:
   deploy:
     runs-on: [self-hosted, dev]
     needs: build
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Download .env file
-      uses: actions/download-artifact@v3
-      with:
-        name: env-file
-
-    - name: Move .env file to the correct location
-      run: mv env-file/.env .env
-
     - run: pm2 restart main
