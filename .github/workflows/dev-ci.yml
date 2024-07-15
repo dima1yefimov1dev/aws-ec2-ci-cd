@@ -36,4 +36,4 @@ jobs:
 
       - name: Restart Application with PM2
         run: |
-          npx cross-env ENV_FILE=.env pm2 restart main --update-env
+          npx cross-env ENV_FILE=.env pm2 restart main
