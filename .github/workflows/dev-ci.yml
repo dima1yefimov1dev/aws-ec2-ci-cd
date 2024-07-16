@@ -21,7 +21,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Make dev envfile
+      - name: Create dev env-file
         uses: SpicyPizza/create-envfile@v2.0.3
         with:
           envkey_HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
@@ -38,4 +38,4 @@ jobs:
 
       - name: Restart Application with PM2
         run: |
-          pm2 restart main
+          npm run deploy:up
