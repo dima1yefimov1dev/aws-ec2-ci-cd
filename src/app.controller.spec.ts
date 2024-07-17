@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import * as dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables from .env file
 
 describe('AppController', () => {
   let appController: AppController;
@@ -15,8 +18,9 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "hey ${process.env.HELLO_MESSAGE}"', () => {
+      const expectedMessage = `hey ${process.env.HELLO_MESSAGE}`;
+      expect(appController.getHello()).toBe(expectedMessage);
     });
   });
 });
