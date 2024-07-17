@@ -6,36 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
+  checkout:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
   build:
     runs-on: self-hosted
+    needs: checkout
     environment: dev
     strategy:
       matrix:
         node-version: [20.x]
     steps:
-      - uses: actions/checkout@v4
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-
       - name: Create dev env-file
         uses: SpicyPizza/create-envfile@v2.0.3
         with:
           envkey_HELLO_MESSAGE: ${{ secrets.HELLO_MESSAGE }}
           envkey_PORT: ${{ secrets.PORT }}
-          envkey_NODE_ENV: dev
           file_name: .env
           fail_on_empty: false
           sort_keys: false
           directory: ./
+      - name: Install dependencies
+        run: npm ci
+      - name: Build application
+        run: npm run build --if-present
 
-      - run: npm ci
-
-      - run: npm run build --if-present
-
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
       - name: Restart Application with PM2
         run: |
           npm run deploy:up
