@@ -36,19 +36,7 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
-  
-  close_pr_on_failure:
-  runs-on: self-hosted
-  needs: test
-  if: failure()
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Close pull request
-      run: gh pr close ${{ github.event.pull_request.number }} -r "Closing PR due to failed tests."
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-  
+
   build:
     runs-on: self-hosted
     needs: [checkout, test]
@@ -81,5 +69,4 @@ jobs:
     needs: build
     steps:
       - name: Restart Application with PM2
-        run: |
-          npm run deploy:up
+        run: npm run deploy:up
