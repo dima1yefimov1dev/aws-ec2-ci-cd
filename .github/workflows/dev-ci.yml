@@ -47,7 +47,7 @@ jobs:
     - name: Close pull request
       run: gh pr close ${{ github.event.pull_request.number }} -r "Closing PR due to failed tests."
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
   
   build:
     runs-on: self-hosted
