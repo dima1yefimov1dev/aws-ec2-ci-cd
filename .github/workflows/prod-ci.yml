@@ -5,12 +5,12 @@ on:
   
 jobs:
   checkout:
-    runs-on: self-hosted
+    runs-on: [self-hosted, prod]
     steps:
       - uses: actions/checkout@v4
 
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, prod]
     needs: checkout
     environment: prod
     strategy:
@@ -37,7 +37,7 @@ jobs:
         run: npm run build --if-present
 
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, prod]
     needs: build
     steps:
       - name: Restart Application with PM2
